@@ -1,0 +1,12 @@
+function Person(name, age, gender){
+  this.name = name
+  this.age = age
+  this.gender = gender
+}
+
+var per = new Person("孙悟空", 18, "男")
+
+console.log(per) //为什么会输出"[object Object]"
+
+//当我们直接在页面中打印一个对象是，事实上是输出对象的toString()f方法的返回值
+//如果我们希望在输出对象时不输出[object Object]，可以为对象添加一个toString()方法

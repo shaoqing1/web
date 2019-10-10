@@ -1,0 +1,10 @@
+一个前端学习的GitHub https://github.com/qianguyihao/Web
+//本文出自 https://www.cnblogs.com/smyhvae/p/7253929.html
+
+关于文字样式的属性，都具有继承性，这些属性包括：color，text-开头，line-开头的，font-开头的
+关于盒子，定位，布局的属性都不能继承
+
+二、CSS的层叠性
+1、层叠性：计算权重
+  层叠性：就是css处理冲突的能力。所有的权重计算，没有任何兼容问题
+  

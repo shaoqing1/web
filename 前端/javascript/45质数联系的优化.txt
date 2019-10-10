@@ -1,0 +1,33 @@
+求100以内的质数
+
+一般方法
+var flag = true
+for(var i = 2; i <= 100; i++) {
+  flag = true
+  for(var j = 2; j < 100; j++) {
+    if (i % j == 0) {
+      flag = false
+      break
+    }
+  }
+}
+
+优化之后的方法
+36的因数有
+1 36
+2 18
+3 12
+4 9
+6 6
+可以看到当j的值大于6以后所有的因数都是重复的
+所以我们没有必要进行那么多次循环。
+var flag = true
+for(var i = 2; i <= 100; i++){
+  flag = true
+  for(var j = 2; j <= Math.sqrt(i); j++) {
+    if (i % j == 0) {
+      flag = false
+      break
+    }
+  }
+}

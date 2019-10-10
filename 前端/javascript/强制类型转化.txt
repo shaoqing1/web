@@ -1,0 +1,45 @@
+一、强制类型转化
+1、强制类型转化string
+  方法一：调用被转化数据类型得toString方法
+          该方法不会影响到变量，它会将转换得结果返回
+          但是注意null和undefined这两个值没有toString方法，如果调用他们则会报错
+  方式二：调用String函数，并将要转化得数据做为参数传递给函数
+          该方法不会影响到变量，它会将转换得结果返回
+          使用String做强制类型转换时，对于number和boolean实际上就是调用得toString方法
+          但是对于null和undefined就不会调用toString
+            它会将我们得null直接转化为“null”
+            会将我们的undefined直接转换为“undefined”
+2、强制类型转化Number
+  方式一：使用Number()函数
+    --->字符串转数值
+        如果时纯数字得字符串，则直接将其转换为数字
+        如果字符串中由非字符串得内容，则转化为NaN
+        如果字符串时空串或者全是空格得字符串则转化为0
+        布尔转数字true转换成1，false转换为0
+        null-->数字0
+        undefined --> NaN
+
+  方式二：
+    这种方式专门用户对付字符串
+    parseInt()
+    parseFloat()
+    parseInt()可以将一个字符串中得有效整数取出来，转换为Number
+      “123px” --> 123
+      "123a567" --> 123
+      "123.567" --> 123
+      "a123" --> NaN
+      注意：该方法也可以用于对一个小数得取整操作
+    parseFloat()可以将一个字符串中有效得小数转化为Number
+      “123.456” --> 123.456
+      "123.456.789" --> 123.456
+    如果对非String类型得数据类型，则先将该数据类型转换为string，再调用parseInt()
+  
+3.转化为Boolean
+  使用Boolean函数
+    数字转Boolean除了0和NaN是false，其余得都是true
+    字符串转Boolean，除了空串是false，其余得都是true
+    null-->false
+    undefined --> false
+    对象也会转化为true
+  
+    

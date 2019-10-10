@@ -1,0 +1,116 @@
+
+var obj = new Person()
+创建一个构造函数，专门用于创建Person
+  构造函数就是一个普通的函数，创建方式和普通函数没有区别
+  不同的是构造函数习惯上首字母大写
+构造函数和普通函数的区别就是调用方式的不同，
+  普通函数是直接调用，而构造函数需要使用new关键字来调用
+  
+构造函数的执行流程:
+  1.立刻创建一个新的对象
+  2.将新建的对象，设置为我们函数中的this（是this = 新建对象的意思吗？）。在构造函数可以使用this来引用我们新建的对象
+  3.逐行执行函数中的代码
+  4.将新建的对象作为返回值返回
+使用同一个构造函数创建的对象称为一类对象，也可以将一个构造函数称为一个类
+  我们将通过该构造函数创建的对象称为，该类的实例
+  
+对象 instanceof 构造函数
+  如果是返回true，否则返回false
+  所有对象和Object做instanceof检查时都会返回true
+
+this的情况：
+  1.当以函数的形式调用时，this是window
+  2.当以方法的方法的形式调用时，谁调用方法this就是谁
+  3.当以构造函数的形式调用时，this就是新创建的那个对象
+  
+function Person(name, age,gender) {
+  this.name = name
+  this.age = age
+  this.gender = gender
+  this.sayName = function() {
+    alert(this.name)
+  }
+}
+var person = new Person() //返回的是一个对象
+var person = Person() //返回的是undefined
+
+console.log(person instanceof Object) //true
+console.log(dog instanceof Object)//true
+
+
+65.
+在Person函数中，为每一个对象都添加了一个sayName方法
+  也就是说构造函数每一次执行都会创建一个新的sayName方法
+  也就是所有实例的sayName都是唯一的，
+  
+这样就导致了构造函数执行一次就创建一个新的方法，
+    执行10000次就会创建一个新的方法，但是我们一万各方法都是一模一样的
+    这是完全没有必要的，完全可以使用所有的对象共享同一个方法
+将sayName方法在全局作用域中定义
+function fun(){
+  alert("Hello我是" + this.name)
+}
+function Person(name, age, gender) {
+  this.name = name;
+  this.age = age;
+  this.gender = gender;
+  this.sayName = fun;
+}
+
+var person = new Person("孙悟空", 19, "男")
+
+66.原型对象
+将函数定义在全局作用域中，污染了全局作用域的命名空间
+  而且定义在全局作用域中也很不安全
+  
+原型prototype
+  我们创建的每一个函数，解析器都会向函数添加一个属性prototype属性，每个函数的该属性不相等
+  这个属性对应着一个对象，这个对象就是我们所谓的原型对象。
+
+如果我们的还是作为普通对象，prototype没有任何用处
+当函数作为构造函数调用时,创建的对象中都会有一个隐含的属性
+  指向该构造函数的原型对象，我们可以通过__proto__来访问该属性
+  
+原型对象就相当于一个公共的区域，所有同一个类的实例都可以访问到这个原型对象
+  我们可以将对象中共有的内容，统一设置到原型对象中。
+
+当我们访问对象的一个属性或方法时，它会先在自身中去寻找，如果有则直接使用
+  如果没有则去原型对象中找
+  
+以后创建构造函数时，将对象共有的属性和方法添加到原型对象中
+  这样不用为每一个对象添加，也不会影响全局作用域。
+  
+向Person的原型中添加属性a
+  Person.prototype.a=123
+向Person的原型中添加一个方法
+  Person.prototype.sayHello = function() {
+    alert("Hello")
+  }
+      
+function Person() {
+}
+
+var person = new Person()
+
+67.原型
+function MyClass() {}
+
+MyClass.prototype.name = "我是原型中的名字"
+var mc = new MyClass();
+
+console.log("name" in mc) 会返回true
+//使用in检查对象中是否含有某个属性时，如果某个对象中没有原型中有，也会返回true
+//可以使用对象的hasOwnProperty()来检查自身对象中是否含有该属性
+/使用该方法，只有当对象自身中含有该属性时，才会返回true
+console.log(mc.hasOwnProperty("name"))
+
+console.log(mc.hasOwnProperty("hasOwnProperty")) //返回false
+console.log(mc.__proto__.hasOwnProperty("hasOwnProperty")) //还是返回false
+console.log(mc.__proto__.__proto__.__proto__)
+
+
+原型对象也是对象，所以它也有原型
+  当我们使用一个对象的属性或方法时，会在自身中寻找。
+  自身中如果有，则直接使用，
+  如果没有则去原型中寻找，如果原型中有则使用，没有则去原型的原型中去找
+  直到找到Object对象的原型，如果在Object原型中依然没有，则为undefined
